@@ -11,7 +11,7 @@ import Moya
 
 protocol MusicListViewControllerDelegate: AnyObject {
     func presentMusicList()
-    func presentAddDiary()
+    func presentAddDiary(viewModel: DiaryViewModel)
 }
 
 final class MusicListViewController: BaseViewController {
@@ -157,6 +157,7 @@ final class MusicListViewController: BaseViewController {
 // MARK: - extension
 extension MusicListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.presentAddDiary()
+        let diaryVM = viewModel.changeToDiary(indexPath.row)
+        delegate?.presentAddDiary(viewModel: diaryVM)
     }
 }

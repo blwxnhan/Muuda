@@ -19,16 +19,19 @@ class DiaryViewModel {
         self.index = index
     }
     
-    var title: String? {
-        return diaryData?.title
+    var title: String {
+        guard let title = diaryData?.title else { return "" }
+        return title
     }
     
-    var singer: String? {
-        return diaryData?.singer
+    var singer: String {
+        guard let singer = diaryData?.singer else { return "" }
+        return singer
     }
     
     var imageName: String? {
-        return diaryData?.imageName
+        guard let imageName = diaryData?.imageName else { return "" }
+        return imageName
     }
     
     var diary: String? {
@@ -39,5 +42,7 @@ class DiaryViewModel {
         return diaryData?.date
     }
     
-    
+    var color: ColorsType? {
+        return diaryData?.color
+    }
 }

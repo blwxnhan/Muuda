@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ColorsType {
+enum ColorsType: Codable {
     case first, second, third, fourth, fifth
     
     func toUIColor() -> UIColor {
@@ -37,6 +37,21 @@ enum ColorsType {
             "fourth"
         case .fifth:
             "fifth"
+        }
+    }
+    
+    func toInt() -> Int {
+        switch self {
+        case .first:
+            0
+        case .second:
+            1
+        case .third:
+            2
+        case .fourth:
+            3
+        case .fifth:
+            4
         }
     }
 }

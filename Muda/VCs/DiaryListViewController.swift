@@ -10,7 +10,7 @@ import SnapKit
 
 protocol DiaryListViewControllerDelegate: AnyObject {
     func presentDiaryList()
-    func presentDiary()
+    func presentDiary(viewModel: DiaryViewModel)
 }
 
 final class DiaryListViewController: BaseViewController {
@@ -108,6 +108,6 @@ final class DiaryListViewController: BaseViewController {
 // MARK: - extension
 extension DiaryListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.presentDiary()
+        delegate?.presentDiary(viewModel: viewModel.diaryViewModelAtIndex(indexPath.row))
     }
 }

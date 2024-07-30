@@ -9,17 +9,28 @@ import UIKit
 import SnapKit
 
 protocol AddDiaryViewControllerDelegate: AnyObject {
-    func presentAddDiary()
+    func presentAddDiary(viewModel: DiaryViewModel)
 }
 
 final class AddDiaryViewController: BaseViewController {
     weak var delegate: AddDiaryViewControllerDelegate?
-    private let selectedColor: [Bool] = [true, false, false, false, false]
+    private var selectedColor: [Bool] = [false, false, false, false, false]
+    
+    private let viewModel: DiaryViewModel
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    init(viewModel: DiaryViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
     }
     
     private lazy var musicImageView: UIImageView = {
@@ -69,23 +80,21 @@ final class AddDiaryViewController: BaseViewController {
     }()
     
     private let diaryLabel = DescriptionLabel(title: "Diary")
-    
     private let diaryTextView: UITextView = {
         let textView = UITextView()
         textView.layer.cornerRadius = 10
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.myGray.cgColor
         textView.layer.masksToBounds = true
+        textView.font = .systemFont(ofSize: 15, weight: .medium)
         
         return textView
     }()
     
     private let colorLabel = DescriptionLabel(title: "Color")
-    
     private let colorStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-//        stackView.spacing = 25
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
         stackView.layer.borderWidth = 1
@@ -105,7 +114,6 @@ final class AddDiaryViewController: BaseViewController {
     private lazy var fifthColorButton = ColorButton(color: ColorsType.fifth, selected: selectedColor[4])
     
     private let dateLabel = DescriptionLabel(title: "Date")
-    
     private var datePicker: UIDatePicker = {
         var datePicker = UIDatePicker()
         datePicker.preferredDatePickerStyle = .compact
@@ -132,6 +140,32 @@ final class AddDiaryViewController: BaseViewController {
         
         return button
     }()
+    
+    private func configureUI() {
+        guard let imageUrl = self.viewModel.imageName else { return }
+        requestImageURL(url: imageUrl)
+        musicTitleLabel.text = viewModel.title
+        musicSingerLabel.text = viewModel.singer
+        diaryTextView.text = viewModel.diary
+        if let color = viewModel.color {
+            selectedColor[color.toInt()] = true
+        }
+        datePicker.date = viewModel.date ?? Date()
+    }
+    
+    private func requestImageURL(url: String) {
+        guard let url = URL(string: url) else { return }
+        
+        let backgroundQueue = DispatchQueue(label: "background_queue",qos: .background)
+        
+        backgroundQueue.async {
+            guard let data = try? Data(contentsOf: url) else { return }
+            
+            DispatchQueue.main.async {
+                self.musicImageView.image = UIImage(data: data)
+            }
+        }
+    }
     
     override func setupLayouts() {
         super.setupLayouts()

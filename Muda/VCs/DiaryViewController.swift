@@ -9,14 +9,18 @@ import UIKit
 import SnapKit
 
 protocol DiaryViewControllerDelegate: AnyObject {
-    func presentDiary()
-    func presentAddDiary()
+    func presentDiary(viewModel: DiaryViewModel)
+    func presentAddDiary(viewModel: DiaryViewModel)
 }
 
 final class DiaryViewController: BaseViewController {
     weak var delegate: DiaryViewControllerDelegate?
     
-    private let viewModel = DiaryViewModel(dataManager: DiaryListManager())
+    var viewModel: DiaryViewModel! {
+        didSet {
+            configureUI()
+        }
+    }
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -36,7 +40,8 @@ final class DiaryViewController: BaseViewController {
         
         button.configuration = config
         button.addAction(UIAction { [weak self] _ in
-            self?.delegate?.presentAddDiary()
+            guard let viewModel = self?.viewModel else { return }
+            self?.delegate?.presentAddDiary(viewModel: viewModel)
         }, for: .touchUpInside)
         
         return button
@@ -44,7 +49,6 @@ final class DiaryViewController: BaseViewController {
     
     private let musicView: UIView = {
         let view = UIView()
-        view.backgroundColor = .first
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
     
@@ -62,8 +66,7 @@ final class DiaryViewController: BaseViewController {
     
     private let musicTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 30, weight: .bold)
-        label.text = "Super Shy"
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         
         return label
     }()
@@ -71,7 +74,6 @@ final class DiaryViewController: BaseViewController {
     private let musicSingerLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .light)
-        label.text = "New jeans"
         
         return label
     }()
@@ -92,7 +94,6 @@ final class DiaryViewController: BaseViewController {
     
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2024.07.29"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         label.textAlignment = .center
         
@@ -101,15 +102,25 @@ final class DiaryViewController: BaseViewController {
     
     private let diaryLabel: UILabel = {
         let label = UILabel()
-        label.text = "뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         label.numberOfLines = 0
+        label.setLineSpacing(lineSpacing: 15)
         label.layer.borderWidth = 1
         label.layer.cornerRadius = 10
         label.layer.borderColor = UIColor.myGray.cgColor
+        label.sizeToFit()
         
         return label
     }()
+    
+    private func configureUI() {
+        musicView.backgroundColor = viewModel.color?.toUIColor()
+        requestImageURL(data: viewModel.imageName)
+        musicTitleLabel.text = viewModel.title
+        musicSingerLabel.text = viewModel.singer
+        dateLabel.text = viewModel.date?.basic
+        diaryLabel.text = viewModel.diary
+    }
     
     private func requestImageURL(data: String?) {
         guard let imageUrl = data else { return }
@@ -154,7 +165,7 @@ final class DiaryViewController: BaseViewController {
         musicView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.height.equalTo(170)
+            $0.height.equalTo(150)
         }
         
         musicImageView.snp.makeConstraints {

@@ -92,6 +92,7 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         musicTitleLabel.text = viewModel.title
         musicSingerLabel.text = viewModel.singer
         diaryLabel.text = viewModel.diary
+        self.contentView.backgroundColor = viewModel.color?.toUIColor()
     }
     
     private func setStyles() {
@@ -101,7 +102,6 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         self.layer.shadowRadius = 6
         self.contentView.layer.cornerRadius = 10
         self.contentView.layer.masksToBounds = true
-        self.contentView.backgroundColor = .first
     }
     
     private func setLayouts() {

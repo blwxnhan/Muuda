@@ -22,9 +22,7 @@ class DiaryListViewModel {
     var diaryList: [DiaryModel] {
         return diaryListData
     }
-    
 
-    
     func diaryViewModelAtIndex(_ index: Int) -> DiaryViewModel {
         let diary = self.diaryListData[index]
         return DiaryViewModel(dataManager: self.dataManager, with: diary, index: index)

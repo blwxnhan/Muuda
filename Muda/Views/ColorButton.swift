@@ -33,7 +33,7 @@ final class ColorButton: UIButton {
         switch button.state {
         case .selected:
             button.layer.borderWidth = 3
-            button.layer.borderColor = UIColor.systemGray.cgColor
+            button.layer.borderColor = UIColor.black.cgColor
         default:
             button.layer.borderWidth = 0
         }

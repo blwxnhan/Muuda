@@ -25,6 +25,34 @@ final class MusicListViewModel {
         return MusicViewModel(musicData: music)
     }
     
+//    func changeToDiary(_ index: Int) -> DiaryModel {
+//        let musicInfo = self.musicList[index]
+//        let diary = DiaryModel(title: musicInfo.title,
+//                               imageName: musicInfo.imageName,
+//                               singer: musicInfo.singer,
+//                               diary: nil,
+//                               date: nil,
+//                               color: nil,
+//                               isLike: nil)
+//        
+//        return diary
+//    }
+    
+    func changeToDiary(_ index: Int) -> DiaryViewModel {
+        let musicInfo = self.musicList[index]
+        let diary = DiaryModel(title: musicInfo.title, 
+                               imageName: musicInfo.imageName,
+                               singer: musicInfo.singer,
+                               diary: nil,
+                               date: nil,
+                               color: nil,
+                               isLike: nil)
+        
+        let diaryViewModel = DiaryViewModel(dataManager: DiaryListManager(), with: diary)
+        
+        return diaryViewModel
+    }
+    
     func fetchMusicList(completion: @escaping (() -> Void)) {
         guard let text = self.searchText else { return }
         
