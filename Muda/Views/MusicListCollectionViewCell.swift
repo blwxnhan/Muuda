@@ -9,7 +9,20 @@ import UIKit
 import SnapKit
 
 final class MusicListCollectionViewCell: UICollectionViewCell {
-    private var playToggle: Bool = true
+    var viewModel: MusicViewModel! {
+        didSet {
+            configureData()
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setLayout()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     private var musicImageView: UIImageView = {
         let imageView = UIImageView()
@@ -32,46 +45,7 @@ final class MusicListCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-    
-    private lazy var musicSettingButton: UIButton = {
-        let button = UIButton()
         
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = .systemBackground
-        config.baseForegroundColor = .black
-        button.configuration = config
-        button.configurationUpdateHandler = handler
-        button.isSelected = false
-        button.addAction(UIAction { [weak self] _ in
-            self?.playButtonclick()
-        }, for: .touchUpInside)
-        
-        return button
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setLayout()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    private let handler: UIButton.ConfigurationUpdateHandler = { button in
-        switch button.state {
-        case .selected:
-            button.configuration?.image = UIImage(systemName: "heart.fill")
-        default:
-            button.configuration?.image = UIImage(systemName: "heart")
-        }
-    }
-    
-    private func playButtonclick() {
-        musicSettingButton.isSelected.toggle()
-        playToggle.toggle()
-    }
-    
     private func requestImageURL(url: String) {
         guard let url = URL(string: url) else { return }
         
@@ -85,23 +59,22 @@ final class MusicListCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
-    func configureData(data: Music) {
-        requestImageURL(url: data.imageName)
-        musicTitleLabel.text = data.title
-        singerNameLabel.text = data.singer
+     
+    private func configureData() {
+        requestImageURL(url: viewModel.imageName)
+        musicTitleLabel.text = viewModel.title
+        singerNameLabel.text = viewModel.singer
     }
 
     private func setLayout() {
         [musicImageView,
          musicTitleLabel,
-         singerNameLabel,
-         musicSettingButton].forEach {
+         singerNameLabel].forEach {
             addSubview($0)
         }
         
         musicImageView.snp.makeConstraints {
-            $0.leading.equalTo(self).offset(20)
+            $0.leading.equalTo(self).offset(10)
             $0.centerY.equalTo(self)
             $0.height.width.equalTo(70)
         }
@@ -116,13 +89,6 @@ final class MusicListCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(musicTitleLabel.snp.top)
             $0.leading.equalTo(musicImageView.snp.trailing).offset(20)
             $0.bottom.equalTo(self).offset(-5)
-        }
-        
-        musicSettingButton.snp.makeConstraints {
-            $0.centerY.equalTo(self)
-            $0.trailing.equalTo(self).offset(-30)
-            $0.height.equalTo(30)
-            $0.width.equalTo(30)
         }
     }
 }

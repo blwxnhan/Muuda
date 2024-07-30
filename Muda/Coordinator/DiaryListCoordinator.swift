@@ -15,7 +15,7 @@ final class DiaryListCoordinator: Coordinator {
     var navigationController: UINavigationController
 
     func start() {
-
+        presentDiaryList()
     }
     
     init(navigationController: UINavigationController) {
@@ -24,6 +24,25 @@ final class DiaryListCoordinator: Coordinator {
     }
 }
 
-extension DiaryListCoordinator {
+extension DiaryListCoordinator: DiaryListViewControllerDelegate,
+                            DiaryViewControllerDelegate,
+                            AddDiaryViewControllerDelegate {
+    func presentDiaryList() {
+        let diaryList = DiaryListViewController()
+        diaryList.delegate = self
+        navigationController.pushViewController(diaryList, animated: true)
+    }
     
+    func presentDiary() {
+        let diary = DiaryViewController()
+        diary.delegate = self
+        navigationController.pushViewController(diary, animated: true)
+    }
+    
+    func presentAddDiary() {
+        let addDiary = AddDiaryViewController()
+        addDiary.delegate = self
+        addDiary.modalPresentationStyle = UIModalPresentationStyle.automatic
+        navigationController.present(addDiary, animated: true, completion: nil)
+    }
 }

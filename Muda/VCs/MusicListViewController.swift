@@ -9,19 +9,28 @@ import UIKit
 import SnapKit
 import Moya
 
+protocol MusicListViewControllerDelegate: AnyObject {
+    func presentMusicList()
+    func presentAddDiary()
+}
+
 final class MusicListViewController: BaseViewController {
-    private var musicListManager: [Music] = []
+    weak var delegate: MusicListViewControllerDelegate?
     
+    private var musicListManager: [Music] = []
     var dataSource: UICollectionViewDiffableDataSource<Section, Music>!
+    
+    private let viewModel = MusicListViewModel()
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hideKeyboardWhenTappedAround()
-        self.setupDataSource()
+        hideKeyboardWhenTappedAround()
+        setupDataSource()
         
-        self.fetchMusicInfo(searchText: "new jeans")
+        fetchMusicInfo(searchText: "new jeans")
+        setupNavigationBar()
     }
     
     private var searchBar: UISearchBar = {
@@ -37,19 +46,15 @@ final class MusicListViewController: BaseViewController {
         button.setTitle("검색", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addAction(UIAction { [weak self] _ in
-            self?.fetchMusicInfo(searchText: self?.searchBar.text ?? "")
+            guard let text = self?.searchBar.text else { return }
+            self?.fetchMusicInfo(searchText: text)
         }, for: .touchUpInside)
         
         return button
     }()
     
     private lazy var musicListCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 1.0
-        layout.minimumLineSpacing = 1.0
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.delegate = self
     
         return collectionView
@@ -58,13 +63,46 @@ final class MusicListViewController: BaseViewController {
     private func setupDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<MusicListCollectionViewCell, Music> {
             (cell, indexPath, music) in
-            cell.configureData(data: self.musicListManager[indexPath.row])
+            
+            let musicVM = self.viewModel.musicViewModelAtIndex(indexPath.row)
+            cell.viewModel = musicVM
         }
         
         self.dataSource = UICollectionViewDiffableDataSource<Section, Music>(collectionView: self.musicListCollectionView) {
             (collectionView, indexPath, music) -> UICollectionViewCell? in
             return self.musicListCollectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: music)
         }
+    }
+    
+    // MARK: - collection view layout 설정
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
+            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection in
+            
+            let inset = CGFloat(10)
+            /// 하나의 item 설정
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                  heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+
+            /// 주 그룹 설정
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .absolute(90))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            ///  section 설정
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0)
+
+            return section
+        }
+        return layout
+    }
+    
+    private func setupNavigationBar() {
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIImageView(image: UIImage(named: "headerLogo")))
     }
     
     private func performQuery(data: [Music]) {
@@ -75,21 +113,9 @@ final class MusicListViewController: BaseViewController {
     }
     
     private func fetchMusicInfo(searchText: String) {
-        let provider = MoyaProvider<APIService>()
-        provider.request(.fetchMusic(term: searchText)) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case let .success(response):
-                    let result = try? response.map(MusicList.self)
-                    
-                    if let result = result {
-                        self.musicListManager = result.results
-                        self.performQuery(data: self.musicListManager)
-                    }
-                case let .failure(error):
-                    print(error.localizedDescription)
-                }
-            }
+        viewModel.setSearchText(searchText)
+        viewModel.fetchMusicList {
+            self.performQuery(data: self.viewModel.musicList)
         }
     }
     
@@ -130,17 +156,7 @@ final class MusicListViewController: BaseViewController {
 
 // MARK: - extension
 extension MusicListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width: CGFloat = collectionView.frame.width
-        let height: CGFloat = (collectionView.frame.width / 3) - 57.0
-        return CGSize(width: width, height: height)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let diaryVC = DiaryViewController()
-        self.present(diaryVC, animated: true)
+        delegate?.presentAddDiary()
     }
 }

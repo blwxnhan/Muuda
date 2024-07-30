@@ -15,7 +15,7 @@ final class MusicListCoordinator: Coordinator {
     var navigationController: UINavigationController
 
     func start() {
-
+        presentMusicList()
     }
     
     init(navigationController: UINavigationController) {
@@ -24,6 +24,18 @@ final class MusicListCoordinator: Coordinator {
     }
 }
 
-extension MusicListCoordinator {
+extension MusicListCoordinator: MusicListViewControllerDelegate,
+                                    AddDiaryViewControllerDelegate {
+    func presentMusicList() {
+        let musicList = MusicListViewController()
+        musicList.delegate = self
+        navigationController.pushViewController(musicList, animated: true)
+    }
     
+    func presentAddDiary() {
+        let addDiary = AddDiaryViewController()
+        addDiary.delegate = self
+        addDiary.modalPresentationStyle = UIModalPresentationStyle.automatic
+        navigationController.present(addDiary, animated: true, completion: nil)
+    }
 }

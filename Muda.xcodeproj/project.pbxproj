@@ -27,8 +27,19 @@
 		29401FBC2C579EF60018EF8F /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 29401FBB2C579EF60018EF8F /* Moya */; };
 		29401FBE2C579F070018EF8F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FBD2C579F070018EF8F /* APIService.swift */; };
 		29401FC02C579F390018EF8F /* MusicListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FBF2C579F390018EF8F /* MusicListCollectionViewCell.swift */; };
-		29401FC22C579F650018EF8F /* MusicListResDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FC12C579F650018EF8F /* MusicListResDto.swift */; };
+		29401FC22C579F650018EF8F /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FC12C579F650018EF8F /* Music.swift */; };
 		29401FC42C579FAE0018EF8F /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FC32C579FAE0018EF8F /* DiaryViewController.swift */; };
+		29401FC62C57A48F0018EF8F /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FC52C57A48F0018EF8F /* DiaryViewModel.swift */; };
+		29401FC82C57A4F90018EF8F /* DiaryListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FC72C57A4F90018EF8F /* DiaryListManager.swift */; };
+		29401FCC2C57A5520018EF8F /* DiaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FCB2C57A5520018EF8F /* DiaryModel.swift */; };
+		29401FCE2C57B35C0018EF8F /* DiaryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FCD2C57B35C0018EF8F /* DiaryListViewModel.swift */; };
+		29401FD02C57B5350018EF8F /* DiaryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FCF2C57B5350018EF8F /* DiaryListCollectionViewCell.swift */; };
+		29401FD22C58C2A40018EF8F /* AddDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD12C58C2A40018EF8F /* AddDiaryViewController.swift */; };
+		29401FD42C58CC4A0018EF8F /* DescriptionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD32C58CC4A0018EF8F /* DescriptionLabel.swift */; };
+		29401FD62C58CE040018EF8F /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD52C58CE040018EF8F /* ColorButton.swift */; };
+		29401FD82C58DAB00018EF8F /* ColorsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD72C58DAB00018EF8F /* ColorsType.swift */; };
+		29401FDA2C5900440018EF8F /* MusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD92C5900440018EF8F /* MusicViewModel.swift */; };
+		29401FDC2C5900540018EF8F /* MusicListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FDB2C5900540018EF8F /* MusicListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,8 +62,19 @@
 		29401FB62C579E6B0018EF8F /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		29401FBD2C579F070018EF8F /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		29401FBF2C579F390018EF8F /* MusicListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListCollectionViewCell.swift; sourceTree = "<group>"; };
-		29401FC12C579F650018EF8F /* MusicListResDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListResDto.swift; sourceTree = "<group>"; };
+		29401FC12C579F650018EF8F /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		29401FC32C579FAE0018EF8F /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
+		29401FC52C57A48F0018EF8F /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
+		29401FC72C57A4F90018EF8F /* DiaryListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryListManager.swift; sourceTree = "<group>"; };
+		29401FCB2C57A5520018EF8F /* DiaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModel.swift; sourceTree = "<group>"; };
+		29401FCD2C57B35C0018EF8F /* DiaryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryListViewModel.swift; sourceTree = "<group>"; };
+		29401FCF2C57B5350018EF8F /* DiaryListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryListCollectionViewCell.swift; sourceTree = "<group>"; };
+		29401FD12C58C2A40018EF8F /* AddDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiaryViewController.swift; sourceTree = "<group>"; };
+		29401FD32C58CC4A0018EF8F /* DescriptionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionLabel.swift; sourceTree = "<group>"; };
+		29401FD52C58CE040018EF8F /* ColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
+		29401FD72C58DAB00018EF8F /* ColorsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsType.swift; sourceTree = "<group>"; };
+		29401FD92C5900440018EF8F /* MusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewModel.swift; sourceTree = "<group>"; };
+		29401FDB2C5900540018EF8F /* MusicListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +130,10 @@
 		29401F972C57881A0018EF8F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				29401FC52C57A48F0018EF8F /* DiaryViewModel.swift */,
+				29401FCD2C57B35C0018EF8F /* DiaryListViewModel.swift */,
+				29401FD92C5900440018EF8F /* MusicViewModel.swift */,
+				29401FDB2C5900540018EF8F /* MusicListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -115,7 +141,10 @@
 		29401F982C5788290018EF8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				29401FC12C579F650018EF8F /* MusicListResDto.swift */,
+				29401FA42C579A4E0018EF8F /* TabBarItemType.swift */,
+				29401FC12C579F650018EF8F /* Music.swift */,
+				29401FCB2C57A5520018EF8F /* DiaryModel.swift */,
+				29401FD72C58DAB00018EF8F /* ColorsType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,6 +155,7 @@
 				29401F9D2C5788C60018EF8F /* DiaryListViewController.swift */,
 				29401FAF2C579D580018EF8F /* MusicListViewController.swift */,
 				29401FC32C579FAE0018EF8F /* DiaryViewController.swift */,
+				29401FD12C58C2A40018EF8F /* AddDiaryViewController.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -134,6 +164,9 @@
 			isa = PBXGroup;
 			children = (
 				29401FBF2C579F390018EF8F /* MusicListCollectionViewCell.swift */,
+				29401FCF2C57B5350018EF8F /* DiaryListCollectionViewCell.swift */,
+				29401FD32C58CC4A0018EF8F /* DescriptionLabel.swift */,
+				29401FD52C58CE040018EF8F /* ColorButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				29401FBD2C579F070018EF8F /* APIService.swift */,
+				29401FC72C57A4F90018EF8F /* DiaryListManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -161,7 +195,6 @@
 			children = (
 				29401FA02C579A0A0018EF8F /* AppCoordinator.swift */,
 				29401FA22C579A2D0018EF8F /* TabBarCoordinator.swift */,
-				29401FA42C579A4E0018EF8F /* TabBarItemType.swift */,
 				29401FA82C579C890018EF8F /* DiaryListCoordinator.swift */,
 				29401FAA2C579CCF0018EF8F /* MusicListCoordinator.swift */,
 			);
@@ -256,22 +289,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				29401F9E2C5788C60018EF8F /* DiaryListViewController.swift in Sources */,
+				29401FCC2C57A5520018EF8F /* DiaryModel.swift in Sources */,
 				29401FA72C579A8E0018EF8F /* UIColor+.swift in Sources */,
+				29401FDA2C5900440018EF8F /* MusicViewModel.swift in Sources */,
+				29401FD42C58CC4A0018EF8F /* DescriptionLabel.swift in Sources */,
 				29401FB52C579E5B0018EF8F /* UIViewController+.swift in Sources */,
 				29401FC02C579F390018EF8F /* MusicListCollectionViewCell.swift in Sources */,
 				29401FAE2C579D0E0018EF8F /* BaseViewController.swift in Sources */,
 				29401FA92C579C890018EF8F /* DiaryListCoordinator.swift in Sources */,
+				29401FC62C57A48F0018EF8F /* DiaryViewModel.swift in Sources */,
+				29401FCE2C57B35C0018EF8F /* DiaryListViewModel.swift in Sources */,
 				29401FAB2C579CCF0018EF8F /* MusicListCoordinator.swift in Sources */,
+				29401FDC2C5900540018EF8F /* MusicListViewModel.swift in Sources */,
 				29401FB72C579E6B0018EF8F /* UICollectionViewCell+.swift in Sources */,
 				29401FA32C579A2D0018EF8F /* TabBarCoordinator.swift in Sources */,
+				29401FD82C58DAB00018EF8F /* ColorsType.swift in Sources */,
 				29401FBE2C579F070018EF8F /* APIService.swift in Sources */,
 				29401FA12C579A0A0018EF8F /* AppCoordinator.swift in Sources */,
 				29401FB02C579D580018EF8F /* MusicListViewController.swift in Sources */,
 				29401FC42C579FAE0018EF8F /* DiaryViewController.swift in Sources */,
+				29401FD62C58CE040018EF8F /* ColorButton.swift in Sources */,
 				29401F842C5787D30018EF8F /* AppDelegate.swift in Sources */,
 				29401FA52C579A4E0018EF8F /* TabBarItemType.swift in Sources */,
-				29401FC22C579F650018EF8F /* MusicListResDto.swift in Sources */,
+				29401FD02C57B5350018EF8F /* DiaryListCollectionViewCell.swift in Sources */,
+				29401FC22C579F650018EF8F /* Music.swift in Sources */,
 				29401F862C5787D30018EF8F /* SceneDelegate.swift in Sources */,
+				29401FD22C58C2A40018EF8F /* AddDiaryViewController.swift in Sources */,
+				29401FC82C57A4F90018EF8F /* DiaryListManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
