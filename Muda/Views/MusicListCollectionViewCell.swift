@@ -34,14 +34,14 @@ final class MusicListCollectionViewCell: UICollectionViewCell {
     
     private var musicTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         
         return label
     }()
     
     private var singerNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 10, weight: .light)
         
         return label
     }()
@@ -76,19 +76,21 @@ final class MusicListCollectionViewCell: UICollectionViewCell {
         musicImageView.snp.makeConstraints {
             $0.leading.equalTo(self).offset(10)
             $0.centerY.equalTo(self)
-            $0.height.width.equalTo(70)
+            $0.height.width.equalTo(50)
         }
         
         musicTitleLabel.snp.makeConstraints {
             $0.top.equalTo(musicImageView.snp.top).offset(3)
-            $0.leading.equalTo(musicImageView.snp.trailing).offset(20)
+            $0.leading.equalTo(musicImageView.snp.trailing).offset(10)
+            $0.height.equalTo(20)
             $0.width.equalTo(200)
         }
         
         singerNameLabel.snp.makeConstraints {
-            $0.top.equalTo(musicTitleLabel.snp.top)
-            $0.leading.equalTo(musicImageView.snp.trailing).offset(20)
-            $0.bottom.equalTo(self).offset(-5)
+            $0.top.equalTo(musicTitleLabel.snp.bottom)
+            $0.leading.equalTo(musicTitleLabel.snp.leading)
+            $0.height.equalTo(15)
+            $0.width.equalTo(200)
         }
     }
 }

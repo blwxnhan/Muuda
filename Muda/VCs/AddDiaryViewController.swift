@@ -125,6 +125,15 @@ final class AddDiaryViewController: BaseViewController {
         return datePicker
     }()
     
+    private let contentView = UIView()
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        
+        return scrollView
+    }()
+    
     private lazy var finishedButton: UIButton = {
         let button = UIButton()
         
@@ -178,18 +187,24 @@ final class AddDiaryViewController: BaseViewController {
             colorStackView.addArrangedSubview($0)
         }
         
-        [musicImageView, 
-         musicTitleLabel,
-         musicSingerLabel,
-         likeButton,
-         seperatedLineView,
-         diaryLabel,
+        [diaryLabel,
          diaryTextView,
          colorLabel,
          colorStackView,
          dateLabel,
-         datePicker,
-        finishedButton].forEach {
+         datePicker].forEach {
+            contentView.addSubview($0)
+        }
+        
+        scrollView.addSubview(contentView)
+        
+        [musicImageView,
+         musicTitleLabel,
+         musicSingerLabel,
+         likeButton,
+         seperatedLineView,
+         scrollView,
+         finishedButton].forEach {
             view.addSubview($0)
         }
     }
@@ -227,16 +242,28 @@ final class AddDiaryViewController: BaseViewController {
             $0.height.equalTo(1)
         }
         
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(seperatedLineView.snp.bottom).offset(2)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(finishedButton.snp.top).offset(-10)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(scrollView.contentLayoutGuide)
+            $0.width.equalTo(scrollView.frameLayoutGuide)
+            $0.height.equalTo(600)
+        }
+        
         diaryLabel.snp.makeConstraints {
-            $0.top.equalTo(seperatedLineView.snp.bottom).offset(28)
-            $0.leading.equalTo(seperatedLineView.snp.leading).offset(5)
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().offset(25)
             $0.height.equalTo(20)
         }
         
         diaryTextView.snp.makeConstraints {
             $0.top.equalTo(diaryLabel.snp.bottom).offset(5)
             $0.leading.equalTo(diaryLabel.snp.leading).offset(-3)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.trailing.equalToSuperview().offset(-25)
             $0.height.equalTo(200)
         }
         
@@ -249,7 +276,7 @@ final class AddDiaryViewController: BaseViewController {
         colorStackView.snp.makeConstraints {
             $0.top.equalTo(colorLabel.snp.bottom).offset(5)
             $0.leading.equalTo(colorLabel.snp.leading).offset(-3)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.trailing.equalTo(diaryTextView.snp.trailing)
             $0.height.equalTo(80)
         }
         
@@ -262,13 +289,14 @@ final class AddDiaryViewController: BaseViewController {
         datePicker.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(5)
             $0.leading.equalTo(dateLabel.snp.leading).offset(-3)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            $0.trailing.equalTo(diaryTextView.snp.trailing)
             $0.height.equalTo(60)
         }
         
         finishedButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+//            $0.top.equalTo(scrollView.snp.bottom).offset(10)
             $0.height.equalTo(45)
         }
     }

@@ -79,7 +79,7 @@ final class MusicListViewController: BaseViewController {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
             layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection in
             
-            let inset = CGFloat(10)
+            let inset = CGFloat(5)
             /// 하나의 item 설정
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                   heightDimension: .fractionalHeight(1.0))
@@ -88,7 +88,7 @@ final class MusicListViewController: BaseViewController {
 
             /// 주 그룹 설정
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .absolute(90))
+                                                   heightDimension: .absolute(70))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             ///  section 설정
