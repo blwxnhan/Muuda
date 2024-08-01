@@ -8,8 +8,7 @@
 import Foundation
 
 class DiaryListViewModel {
-    
-    let dataManager: DiaryListType
+    private let dataManager: DiaryListType
     
     private var diaryListData: [DiaryModel] {
         return dataManager.getDiarysList()
@@ -26,5 +25,9 @@ class DiaryListViewModel {
     func diaryViewModelAtIndex(_ index: Int) -> DiaryViewModel {
         let diary = self.diaryListData[index]
         return DiaryViewModel(dataManager: self.dataManager, with: diary, index: index)
+    }
+    
+    func addDiary(_ diary: DiaryModel) {
+        dataManager.makeNewDiary(diary)
     }
 }

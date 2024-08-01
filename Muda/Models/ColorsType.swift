@@ -25,6 +25,23 @@ enum ColorsType: Codable {
         }
     }
     
+    static func stringToType(_ text: String) -> ColorsType {
+        switch text {
+        case "first":
+                .first
+        case "second":
+                .second
+        case "third":
+                .third
+        case "fourth":
+                .fourth
+        case "fifth":
+                .fifth
+        default:
+                .first
+        }
+    }
+    
     func toString() -> String {
         switch self {
         case .first:

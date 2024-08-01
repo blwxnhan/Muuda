@@ -42,6 +42,10 @@
 		29401FD82C58DAB00018EF8F /* ColorsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD72C58DAB00018EF8F /* ColorsType.swift */; };
 		29401FDA2C5900440018EF8F /* MusicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FD92C5900440018EF8F /* MusicViewModel.swift */; };
 		29401FDC2C5900540018EF8F /* MusicListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401FDB2C5900540018EF8F /* MusicListViewModel.swift */; };
+		29FD2D8D2C5A963900496160 /* DiaryCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29FD2D8B2C5A963900496160 /* DiaryCoreData.xcdatamodeld */; };
+		29FD2D902C5A98FC00496160 /* Diary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FD2D8E2C5A98FC00496160 /* Diary+CoreDataClass.swift */; };
+		29FD2D912C5A98FC00496160 /* Diary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FD2D8F2C5A98FC00496160 /* Diary+CoreDataProperties.swift */; };
+		29FD2D932C5A996300496160 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FD2D922C5A996300496160 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +83,10 @@
 		29401FD72C58DAB00018EF8F /* ColorsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsType.swift; sourceTree = "<group>"; };
 		29401FD92C5900440018EF8F /* MusicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewModel.swift; sourceTree = "<group>"; };
 		29401FDB2C5900540018EF8F /* MusicListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListViewModel.swift; sourceTree = "<group>"; };
+		29FD2D8C2C5A963900496160 /* DiaryCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DiaryCoreData.xcdatamodel; sourceTree = "<group>"; };
+		29FD2D8E2C5A98FC00496160 /* Diary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Diary+CoreDataClass.swift"; sourceTree = "<group>"; };
+		29FD2D8F2C5A98FC00496160 /* Diary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Diary+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		29FD2D922C5A996300496160 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,8 @@
 		29401F772C5787D30018EF8F = {
 			isa = PBXGroup;
 			children = (
+				29FD2D8E2C5A98FC00496160 /* Diary+CoreDataClass.swift */,
+				29FD2D8F2C5A98FC00496160 /* Diary+CoreDataProperties.swift */,
 				29401F822C5787D30018EF8F /* Muda */,
 				29401F812C5787D30018EF8F /* Products */,
 			);
@@ -114,6 +124,7 @@
 		29401F822C5787D30018EF8F /* Muda */ = {
 			isa = PBXGroup;
 			children = (
+				29FD2D8B2C5A963900496160 /* DiaryCoreData.xcdatamodeld */,
 				29401FAC2C579CFF0018EF8F /* Base */,
 				29401F9F2C5799F10018EF8F /* Coordinator */,
 				29401F9C2C5788530018EF8F /* Service */,
@@ -192,6 +203,7 @@
 			children = (
 				29401FBD2C579F070018EF8F /* APIService.swift */,
 				29401FC72C57A4F90018EF8F /* DiaryListManager.swift */,
+				29FD2D922C5A996300496160 /* CoreDataManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -298,6 +310,7 @@
 				29401FCC2C57A5520018EF8F /* DiaryModel.swift in Sources */,
 				29401FA72C579A8E0018EF8F /* UIColor+.swift in Sources */,
 				29401FDA2C5900440018EF8F /* MusicViewModel.swift in Sources */,
+				29FD2D932C5A996300496160 /* CoreDataManager.swift in Sources */,
 				29401FD42C58CC4A0018EF8F /* DescriptionLabel.swift in Sources */,
 				29401FB52C579E5B0018EF8F /* UIViewController+.swift in Sources */,
 				29401FC02C579F390018EF8F /* MusicListCollectionViewCell.swift in Sources */,
@@ -313,6 +326,7 @@
 				29401FD82C58DAB00018EF8F /* ColorsType.swift in Sources */,
 				29401FBE2C579F070018EF8F /* APIService.swift in Sources */,
 				29401FA12C579A0A0018EF8F /* AppCoordinator.swift in Sources */,
+				29FD2D8D2C5A963900496160 /* DiaryCoreData.xcdatamodeld in Sources */,
 				29401FB02C579D580018EF8F /* MusicListViewController.swift in Sources */,
 				29401FC42C579FAE0018EF8F /* DiaryViewController.swift in Sources */,
 				29401FD62C58CE040018EF8F /* ColorButton.swift in Sources */,
@@ -323,6 +337,8 @@
 				29401F862C5787D30018EF8F /* SceneDelegate.swift in Sources */,
 				29257C5C2C593D5800B2B0FB /* Date+.swift in Sources */,
 				29401FD22C58C2A40018EF8F /* AddDiaryViewController.swift in Sources */,
+				29FD2D902C5A98FC00496160 /* Diary+CoreDataClass.swift in Sources */,
+				29FD2D912C5A98FC00496160 /* Diary+CoreDataProperties.swift in Sources */,
 				29401FC82C57A4F90018EF8F /* DiaryListManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -573,6 +589,19 @@
 			productName = Moya;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		29FD2D8B2C5A963900496160 /* DiaryCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				29FD2D8C2C5A963900496160 /* DiaryCoreData.xcdatamodel */,
+			);
+			currentVersion = 29FD2D8C2C5A963900496160 /* DiaryCoreData.xcdatamodel */;
+			path = DiaryCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 29401F782C5787D30018EF8F /* Project object */;
 }

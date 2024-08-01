@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 protocol DiaryViewControllerDelegate: AnyObject {
-    func presentDiary(viewModel: DiaryViewModel)
     func presentAddDiary(viewModel: DiaryViewModel)
 }
 

@@ -25,7 +25,7 @@ final class MusicListCoordinator: Coordinator {
 }
 
 extension MusicListCoordinator: MusicListViewControllerDelegate,
-                                    AddDiaryViewControllerDelegate {
+                                AddDiaryViewControllerDelegate {
     func presentMusicList() {
         let musicList = MusicListViewController()
         musicList.delegate = self
@@ -37,5 +37,9 @@ extension MusicListCoordinator: MusicListViewControllerDelegate,
         addDiary.delegate = self
         addDiary.modalPresentationStyle = UIModalPresentationStyle.automatic
         navigationController.present(addDiary, animated: true, completion: nil)
+    }
+    
+    func dismiss() {
+        navigationController.dismiss(animated: true)
     }
 }

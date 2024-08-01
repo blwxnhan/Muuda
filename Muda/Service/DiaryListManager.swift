@@ -5,16 +5,16 @@
 //  Created by Bowon Han on 7/29/24.
 //
 
-import Foundation
+import CoreData
+import UIKit
 
 protocol DiaryListType {
     func makeDiarysListDatas()
     func getDiarysList() -> [DiaryModel]
     func makeNewDiary(_ diary: DiaryModel)
-    func updateDiaryInfo(index: Int, with diary: DiaryModel)
+    func updateDiaryInfo(_ diary: DiaryModel)
     subscript(index: Int) -> DiaryModel { get set }
 }
-
 
 final class DiaryListManager: DiaryListType {
     
@@ -26,67 +26,25 @@ final class DiaryListManager: DiaryListType {
     }
     
     func makeDiarysListDatas() {
-        diaryList = [
-            DiaryModel(title: "OMG",
-                       imageName: "https://i.namu.wiki/i/DHZA28_vXGoWuHXJ-Mg4DMzKfs2lbENtijX1uWdZ_b1me4tfzhnVyYtuJDJwGd2j2e73S5CODt5yzxtPY87c6HcWOUnxtbK50pmxdymXAOVBtg6xlEla3xJKbmqtW8JHVDxBZN815oXwkgT2HKWKsw.jpg",
-                       singer: "New Jeans",
-                       diary: "재미있다 재미있다!!!", 
-                       date: Date(),
-                       color: .fourth,
-                       isLike: true),
-            
-            DiaryModel(title: "Super Shy",
-                       imageName: "https://i.namu.wiki/i/DHZA28_vXGoWuHXJ-Mg4DMzKfs2lbENtijX1uWdZ_b1me4tfzhnVyYtuJDJwGd2j2e73S5CODt5yzxtPY87c6HcWOUnxtbK50pmxdymXAOVBtg6xlEla3xJKbmqtW8JHVDxBZN815oXwkgT2HKWKsw.jpg",
-                       singer: "New Jeans",
-                       diary: "뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!",
-                       date: Date(),
-                       color: .fifth,
-                       isLike: true),
-            
-            DiaryModel(title: "Home Sweet",
-                       imageName: "https://i.namu.wiki/i/DHZA28_vXGoWuHXJ-Mg4DMzKfs2lbENtijX1uWdZ_b1me4tfzhnVyYtuJDJwGd2j2e73S5CODt5yzxtPY87c6HcWOUnxtbK50pmxdymXAOVBtg6xlEla3xJKbmqtW8JHVDxBZN815oXwkgT2HKWKsw.jpg",
-                       singer: "New Jeans",
-                       diary: "뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!",
-                       date: Date(),
-                       color: .fifth,
-                       isLike: true),
-            
-            DiaryModel(title: "Super Natural",
-                       imageName: "https://i.namu.wiki/i/DHZA28_vXGoWuHXJ-Mg4DMzKfs2lbENtijX1uWdZ_b1me4tfzhnVyYtuJDJwGd2j2e73S5CODt5yzxtPY87c6HcWOUnxtbK50pmxdymXAOVBtg6xlEla3xJKbmqtW8JHVDxBZN815oXwkgT2HKWKsw.jpg",
-                       singer: "New Jeans",
-                       diary: "뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!",
-                       date: Date(),
-                       color: .fourth,
-                       isLike: true),
-            
-            DiaryModel(title: "Ditto",
-                       imageName: "https://i.namu.wiki/i/DHZA28_vXGoWuHXJ-Mg4DMzKfs2lbENtijX1uWdZ_b1me4tfzhnVyYtuJDJwGd2j2e73S5CODt5yzxtPY87c6HcWOUnxtbK50pmxdymXAOVBtg6xlEla3xJKbmqtW8JHVDxBZN815oXwkgT2HKWKsw.jpg",
-                       singer: "New Jeans",
-                       diary: "뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!",
-                       date: Date(),
-                       color: .first,
-                       isLike: true),
-            
-            DiaryModel(title: "Super Shy",
-                       imageName: "https://i.namu.wiki/i/DHZA28_vXGoWuHXJ-Mg4DMzKfs2lbENtijX1uWdZ_b1me4tfzhnVyYtuJDJwGd2j2e73S5CODt5yzxtPY87c6HcWOUnxtbK50pmxdymXAOVBtg6xlEla3xJKbmqtW8JHVDxBZN815oXwkgT2HKWKsw.jpg",
-                       singer: "New Jeans",
-                       diary: "뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!!  뉴진스 신곡나옴!!!  넘나 귀여운것!! 오마이갓 화잍팅!!! 뉴진스 신곡나옴!!",
-                       date: Date(),
-                       color: .fourth,
-                       isLike: true),
-        ]
+        if let diaryList = CoreDataManager.shared.fetchData() {
+            self.diaryList = diaryList
+        }
     }
     
     func getDiarysList() -> [DiaryModel] {
+        if let diaryList = CoreDataManager.shared.fetchData() {
+            self.diaryList = diaryList
+        }
+        
         return diaryList
     }
     
     func makeNewDiary(_ diary: DiaryModel) {
-        diaryList.append(diary)
+        CoreDataManager.shared.saveData(with: diary)
     }
     
-    func updateDiaryInfo(index: Int, with diary: DiaryModel) {
-        diaryList[index] = diary
+    func updateDiaryInfo(_ diary: DiaryModel) {
+        CoreDataManager.shared.updateData(with: diary)
     }
     
     subscript(index: Int) -> DiaryModel {

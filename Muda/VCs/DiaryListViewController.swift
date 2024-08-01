@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 protocol DiaryListViewControllerDelegate: AnyObject {
-    func presentDiaryList()
     func presentDiary(viewModel: DiaryViewModel)
 }
 
@@ -17,7 +16,7 @@ final class DiaryListViewController: BaseViewController {
     weak var delegate: DiaryListViewControllerDelegate?
     
     var dataSource: UICollectionViewDiffableDataSource<Section, DiaryModel>!
-    private let viewModel = DiaryListViewModel(dataManager: DiaryListManager())
+    private let viewModel: DiaryListViewModel
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -25,7 +24,23 @@ final class DiaryListViewController: BaseViewController {
         
         setupNavigationBar()
         setupDataSource()
+        
         performQuery(data: viewModel.diaryList)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        performQuery(data: viewModel.diaryList)
+    }
+    
+    init(viewModel: DiaryListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
     }
     
     private lazy var diaryListCollectionView: UICollectionView = {

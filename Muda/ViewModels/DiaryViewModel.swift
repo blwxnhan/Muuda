@@ -45,4 +45,53 @@ class DiaryViewModel {
     var color: ColorsType? {
         return diaryData?.color
     }
+    
+    func makeNewDiary(title: String, 
+                      imageName: String,
+                      singer: String,
+                      diary: String,
+                      date: Date,
+                      color: ColorsType,
+                      isLike: Bool) {
+        let newDiary = DiaryModel(title: title,
+                                  imageName: imageName,
+                                  singer: singer,
+                                  diary: diary,
+                                  date: date,
+                                  color: color,
+                                  isLike: isLike)
+        
+        self.dataManager.makeNewDiary(newDiary)
+    }
+    
+    func updateDiary(title: String,
+                             imageName: String,
+                             singer: String,
+                             diary: String,
+                             date: Date,
+                             color: ColorsType,
+                             isLike: Bool) {
+        
+        guard let diaryData = self.diaryData,
+              let index = self.index else { return }
+        
+        let updateDiaryData = DiaryModel(exitingDiary: diaryData, diary: diary, date: date, color: color, isLike: isLike)
+        
+        
+        self.dataManager.updateDiaryInfo(updateDiaryData)
+    }
+    
+    func handleButtonTapped(title: String,
+                            imageName: String,
+                            singer: String,
+                            diary: String,
+                            date: Date,
+                            color: ColorsType,
+                            isLike: Bool) {
+        if self.diaryData?.date != nil {
+            updateDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
+        } else {
+            makeNewDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
+        }
+    }
 }

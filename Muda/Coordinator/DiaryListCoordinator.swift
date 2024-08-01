@@ -28,7 +28,8 @@ extension DiaryListCoordinator: DiaryListViewControllerDelegate,
                             DiaryViewControllerDelegate,
                             AddDiaryViewControllerDelegate {
     func presentDiaryList() {
-        let diaryList = DiaryListViewController()
+        let diaryListVM = DiaryListViewModel(dataManager: DiaryListManager())
+        let diaryList = DiaryListViewController(viewModel: diaryListVM)
         diaryList.delegate = self
         navigationController.pushViewController(diaryList, animated: true)
     }
@@ -45,5 +46,9 @@ extension DiaryListCoordinator: DiaryListViewControllerDelegate,
         addDiary.delegate = self
         addDiary.modalPresentationStyle = UIModalPresentationStyle.automatic
         navigationController.present(addDiary, animated: true, completion: nil)
+    }
+    
+    func dismiss() {
+        navigationController.dismiss(animated: true)
     }
 }

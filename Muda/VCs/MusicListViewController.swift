@@ -10,14 +10,12 @@ import SnapKit
 import Moya
 
 protocol MusicListViewControllerDelegate: AnyObject {
-    func presentMusicList()
     func presentAddDiary(viewModel: DiaryViewModel)
 }
 
 final class MusicListViewController: BaseViewController {
     weak var delegate: MusicListViewControllerDelegate?
     
-    private var musicListManager: [Music] = []
     var dataSource: UICollectionViewDiffableDataSource<Section, Music>!
     
     private let viewModel = MusicListViewModel()
@@ -157,7 +155,7 @@ final class MusicListViewController: BaseViewController {
 // MARK: - extension
 extension MusicListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let diaryVM = viewModel.changeToDiary(indexPath.row)
-        delegate?.presentAddDiary(viewModel: diaryVM)
+        let diary = viewModel.changeToDiary(indexPath.row)
+        delegate?.presentAddDiary(viewModel: diary)
     }
 }

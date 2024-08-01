@@ -48,8 +48,7 @@ final class MusicListViewModel {
                                color: nil,
                                isLike: nil)
         
-        let diaryViewModel = DiaryViewModel(dataManager: DiaryListManager(), with: diary)
-        
+        let diaryViewModel = DiaryViewModel(dataManager: DiaryListManager(), with: diary, index: index)
         return diaryViewModel
     }
     

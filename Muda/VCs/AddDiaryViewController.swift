@@ -9,11 +9,12 @@ import UIKit
 import SnapKit
 
 protocol AddDiaryViewControllerDelegate: AnyObject {
-    func presentAddDiary(viewModel: DiaryViewModel)
+    func dismiss()
 }
 
 final class AddDiaryViewController: BaseViewController {
     weak var delegate: AddDiaryViewControllerDelegate?
+    
     private var selectedColor: [Bool] = [false, false, false, false, false]
     
     private let viewModel: DiaryViewModel
@@ -21,6 +22,8 @@ final class AddDiaryViewController: BaseViewController {
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        self.hideKeyboardWhenTappedAround()
     }
     
     init(viewModel: DiaryViewModel) {
@@ -146,9 +149,25 @@ final class AddDiaryViewController: BaseViewController {
         
         config.attributedTitle = titleAttr
         button.configuration = config
+        button.addAction(UIAction { [weak self] _ in
+            self?.clickFinishedButton()
+            self?.delegate?.dismiss()
+        }, for: .touchUpInside)
         
         return button
     }()
+    
+    private func clickFinishedButton() {
+        guard let imageName = viewModel.imageName else { return }
+        
+        viewModel.handleButtonTapped(title: viewModel.title,
+                               imageName: imageName,
+                               singer: viewModel.singer,
+                               diary: diaryTextView.text,
+                               date: datePicker.date,
+                               color: .fifth,
+                               isLike: true)
+    }
     
     private func configureUI() {
         guard let imageUrl = self.viewModel.imageName else { return }
@@ -296,7 +315,6 @@ final class AddDiaryViewController: BaseViewController {
         finishedButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-//            $0.top.equalTo(scrollView.snp.bottom).offset(10)
             $0.height.equalTo(45)
         }
     }
