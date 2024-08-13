@@ -72,11 +72,8 @@ class DiaryViewModel {
                              color: ColorsType,
                              isLike: Bool) {
         
-        guard let diaryData = self.diaryData,
-              let index = self.index else { return }
-        
+        guard let diaryData = self.diaryData else { return }
         let updateDiaryData = DiaryModel(exitingDiary: diaryData, diary: diary, date: date, color: color, isLike: isLike)
-        
         
         self.dataManager.updateDiaryInfo(updateDiaryData)
     }
