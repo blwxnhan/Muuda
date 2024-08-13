@@ -8,7 +8,7 @@
 import Foundation
 
 struct DiaryModel: Codable, Hashable {
-    var id = UUID()
+    let id: UUID
     let title : String
     let imageName : String
     let singer : String
@@ -18,13 +18,15 @@ struct DiaryModel: Codable, Hashable {
     var isLike: Bool?
     
     /// 글 새롭게 생성할때
-    init(title: String,
+    init(id: UUID = UUID(),
+         title: String,
          imageName: String,
          singer: String,
          diary: String?,
          date: Date?,
          color: ColorsType?,
          isLike: Bool?) {
+        self.id = id
         self.title = title
         self.imageName = imageName
         self.singer = singer

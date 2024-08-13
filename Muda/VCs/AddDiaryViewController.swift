@@ -161,12 +161,12 @@ final class AddDiaryViewController: BaseViewController {
         guard let imageName = viewModel.imageName else { return }
         
         viewModel.handleButtonTapped(title: viewModel.title,
-                               imageName: imageName,
-                               singer: viewModel.singer,
-                               diary: diaryTextView.text,
-                               date: datePicker.date,
-                               color: .fifth,
-                               isLike: true)
+                                   imageName: imageName,
+                                   singer: viewModel.singer,
+                                   diary: diaryTextView.text,
+                                   date: datePicker.date,
+                                   color: .fifth,
+                                   isLike: true)
     }
     
     private func configureUI() {

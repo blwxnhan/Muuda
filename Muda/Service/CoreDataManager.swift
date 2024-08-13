@@ -59,13 +59,15 @@ final class CoreDataManager {
             let diary = try context.fetch(request)
             
             diary.forEach {
-                if let title = $0.title,
+                if let id = $0.id,
+                   let title = $0.title,
                    let imageName = $0.imageName,
                    let singer = $0.singer,
                    let diary = $0.diary,
                    let date = $0.date,
                    let color = $0.color {
-                    diaryModels.append(DiaryModel(title: title,
+                    diaryModels.append(DiaryModel(id: id,
+                                                  title: title,
                                                   imageName: imageName,
                                                   singer: singer,
                                                   diary: diary,
@@ -90,7 +92,7 @@ final class CoreDataManager {
         do {
             let diary = try context.fetch(request)
             let filteredDiary = diary.filter({ $0.id == diaryData.id })
-            
+                        
             filteredDiary.forEach {
                 $0.diary = diaryData.diary
                 $0.date = diaryData.date
@@ -101,7 +103,5 @@ final class CoreDataManager {
         } catch  {
             fatalError()
         }
-
     }
-    
 }

@@ -46,14 +46,16 @@ class DiaryViewModel {
         return diaryData?.color
     }
     
-    func makeNewDiary(title: String, 
+    func makeNewDiary(id: UUID,
+                      title: String,
                       imageName: String,
                       singer: String,
                       diary: String,
                       date: Date,
                       color: ColorsType,
                       isLike: Bool) {
-        let newDiary = DiaryModel(title: title,
+        let newDiary = DiaryModel(id: id,
+                                  title: title,
                                   imageName: imageName,
                                   singer: singer,
                                   diary: diary,
@@ -88,7 +90,7 @@ class DiaryViewModel {
         if self.diaryData?.date != nil {
             updateDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
         } else {
-            makeNewDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
+            makeNewDiary(id: UUID(), title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
         }
     }
 }
