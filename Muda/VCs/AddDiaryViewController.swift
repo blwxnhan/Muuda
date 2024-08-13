@@ -15,6 +15,7 @@ protocol AddDiaryViewControllerDelegate: AnyObject {
 final class AddDiaryViewController: BaseViewController {
     weak var delegate: AddDiaryViewControllerDelegate?
     
+    private var selectedButton: ColorButton?
     private var selectedColor: [Bool] = [false, false, false, false, false]
     
     private let viewModel: DiaryViewModel
@@ -24,6 +25,8 @@ final class AddDiaryViewController: BaseViewController {
         super.viewDidLoad()
         configureUI()
         self.hideKeyboardWhenTappedAround()
+        
+        setupButtons()
     }
     
     init(viewModel: DiaryViewModel) {
@@ -157,6 +160,24 @@ final class AddDiaryViewController: BaseViewController {
         return button
     }()
     
+    private func setupButtons() {
+        firstColorButton.addTarget(self, action: #selector(colorButtonTapped(_:)), for: .touchUpInside)
+        secondColorButton.addTarget(self, action: #selector(colorButtonTapped(_:)), for: .touchUpInside)
+        thirdColorButton.addTarget(self, action: #selector(colorButtonTapped(_:)), for: .touchUpInside)
+        fourthColorButton.addTarget(self, action: #selector(colorButtonTapped(_:)), for: .touchUpInside)
+        fifthColorButton.addTarget(self, action: #selector(colorButtonTapped(_:)), for: .touchUpInside)
+    }
+
+    @objc private func colorButtonTapped(_ sender: ColorButton) {
+        /// 기존에 선택된 버튼이 있으면 선택 해제
+        selectedButton?.isSelected = false
+
+        /// 새로 선택된 버튼을 선택 상태로 전환
+        sender.isSelected = true
+        selectedButton = sender
+    }
+
+    
     private func clickFinishedButton() {
         guard let imageName = viewModel.imageName else { return }
         
@@ -165,21 +186,75 @@ final class AddDiaryViewController: BaseViewController {
                                    singer: viewModel.singer,
                                    diary: diaryTextView.text,
                                    date: datePicker.date,
-                                   color: .fifth,
+                                   color: selectedButtonToColorType(),
                                    isLike: true)
     }
     
     private func configureUI() {
         guard let imageUrl = self.viewModel.imageName else { return }
         requestImageURL(url: imageUrl)
+        
         musicTitleLabel.text = viewModel.title
         musicSingerLabel.text = viewModel.singer
         diaryTextView.text = viewModel.diary
+
         if let color = viewModel.color {
-            selectedColor[color.toInt()] = true
+            let selectedIndex = color.toInt()
+            selectedColor[selectedIndex] = true
+
+            updateButtonSelection(for: selectedIndex)
         }
+        
         datePicker.date = viewModel.date ?? Date()
     }
+    
+    private func selectedButtonToColorType() -> ColorsType {
+        switch selectedButton {
+        case firstColorButton:
+                .first
+        case secondColorButton:
+                .second
+        case thirdColorButton:
+                .third
+        case fourthColorButton:
+                .fourth
+        case fifthColorButton:
+                .fifth
+        default:
+                .first
+        }
+    }
+
+    private func updateButtonSelection(for selectedIndex: Int) {
+        /// 기존에 선택된 버튼의 상태를 모두 해제
+        firstColorButton.isSelected = false
+        secondColorButton.isSelected = false
+        thirdColorButton.isSelected = false
+        fourthColorButton.isSelected = false
+        fifthColorButton.isSelected = false
+
+        /// 해당 색상에 맞는 버튼을 선택된 상태로 설정
+        switch selectedIndex {
+        case 0:
+            firstColorButton.isSelected = true
+            selectedButton = firstColorButton
+        case 1:
+            secondColorButton.isSelected = true
+            selectedButton = secondColorButton
+        case 2:
+            thirdColorButton.isSelected = true
+            selectedButton = thirdColorButton
+        case 3:
+            fourthColorButton.isSelected = true
+            selectedButton = fourthColorButton
+        case 4:
+            fifthColorButton.isSelected = true
+            selectedButton = fifthColorButton
+        default:
+            break
+        }
+    }
+
     
     private func requestImageURL(url: String) {
         guard let url = URL(string: url) else { return }

@@ -28,12 +28,6 @@ final class DiaryViewController: BaseViewController {
         setupNavigationBar()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        configureUI()
-    }
-    
     private lazy var editDiaryButton: UIButton = {
         let button = UIButton()
         

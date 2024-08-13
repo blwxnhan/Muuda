@@ -9,7 +9,11 @@ import UIKit
 
 final class ColorButton: UIButton {
     private let color: ColorsType
-    private let select: Bool
+    private var select: Bool = false {
+        didSet {
+            self.isSelected.toggle()
+        }
+    }
     
     init(color: ColorsType, selected: Bool) {
         self.color = color
