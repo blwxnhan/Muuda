@@ -13,6 +13,7 @@ protocol DiaryListType {
     func getDiarysList() -> [DiaryModel]
     func makeNewDiary(_ diary: DiaryModel)
     func updateDiaryInfo(_ diary: DiaryModel)
+    func deleteDiary(_ diary: DiaryModel)
     subscript(index: Int) -> DiaryModel { get set }
 }
 
@@ -45,6 +46,10 @@ final class DiaryListManager: DiaryListType {
     
     func updateDiaryInfo(_ diary: DiaryModel) {
         CoreDataManager.shared.updateData(with: diary)
+    }
+    
+    func deleteDiary(_ diary: DiaryModel) {
+        CoreDataManager.shared.deleteData(with: diary)
     }
     
     subscript(index: Int) -> DiaryModel {

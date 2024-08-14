@@ -46,7 +46,11 @@ class DiaryViewModel {
         return diaryData?.color
     }
     
-    func makeNewDiary(id: UUID,
+    var isLike: Bool? {
+        return diaryData?.isLike
+    }
+    
+    private func makeNewDiary(id: UUID,
                       title: String,
                       imageName: String,
                       singer: String,
@@ -66,7 +70,7 @@ class DiaryViewModel {
         self.dataManager.makeNewDiary(newDiary)
     }
     
-    func updateDiary(title: String,
+    private func updateDiary(title: String,
                              imageName: String,
                              singer: String,
                              diary: String,
@@ -78,9 +82,23 @@ class DiaryViewModel {
         let updateDiaryData = DiaryModel(exitingDiary: diaryData, diary: diary, date: date, color: color, isLike: isLike)
         
         self.dataManager.updateDiaryInfo(updateDiaryData)
+        print("수정성공")
     }
     
-    func handleButtonTapped(title: String,
+    private func deleteDiary(title: String,
+                             imageName: String,
+                             singer: String,
+                             diary: String,
+                             date: Date,
+                             color: ColorsType,
+                             isLike: Bool) {
+        guard let diaryData = self.diaryData else { return }
+        let deleteDiaryData = DiaryModel(exitingDiary: diaryData, diary: diary, date: date, color: color, isLike: isLike)
+        
+        self.dataManager.deleteDiary(deleteDiaryData)
+    }
+    
+    func handleFinishedButtonTapped(title: String,
                             imageName: String,
                             singer: String,
                             diary: String,
@@ -92,5 +110,15 @@ class DiaryViewModel {
         } else {
             makeNewDiary(id: UUID(), title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
         }
+    }
+    
+    func handleDeleteButtonTapped(title: String,
+                                  imageName: String,
+                                  singer: String,
+                                  diary: String,
+                                  date: Date,
+                                  color: ColorsType,
+                                  isLike: Bool) {
+        deleteDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
     }
 }

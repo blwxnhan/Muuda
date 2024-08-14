@@ -104,4 +104,23 @@ final class CoreDataManager {
             fatalError()
         }
     }
+    
+    func deleteData(with diaryData: DiaryModel) {
+        let context = self.persistentContainer.viewContext
+        let request = Diary.fetchRequest()
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let diary = try context.fetch(request)
+            let filteredDiary = diary.filter({ $0.id == diaryData.id })
+            
+            filteredDiary.forEach {
+                context.delete($0)
+            }
+                        
+            try context.save()
+        } catch  {
+            fatalError()
+        }
+    }
 }

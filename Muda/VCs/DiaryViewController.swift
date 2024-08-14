@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol DiaryViewControllerDelegate: AnyObject {
-    func presentAddDiary(viewModel: DiaryViewModel)
+    func presentAddDiary(viewModel: DiaryViewModel, type: AddType)
 }
 
 final class DiaryViewController: BaseViewController {
@@ -28,6 +28,7 @@ final class DiaryViewController: BaseViewController {
         setupNavigationBar()
     }
     
+    // MARK: - configure UI
     private lazy var editDiaryButton: UIButton = {
         let button = UIButton()
         
@@ -40,7 +41,7 @@ final class DiaryViewController: BaseViewController {
         button.configuration = config
         button.addAction(UIAction { [weak self] _ in
             guard let viewModel = self?.viewModel else { return }
-            self?.delegate?.presentAddDiary(viewModel: viewModel)
+            self?.delegate?.presentAddDiary(viewModel: viewModel, type: AddType.update)
         }, for: .touchUpInside)
         
         return button
@@ -75,20 +76,6 @@ final class DiaryViewController: BaseViewController {
         label.font = .systemFont(ofSize: 17, weight: .light)
         
         return label
-    }()
-    
-    private lazy var likeButton: UIButton = {
-        let button = UIButton()
-        
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .black
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
-        let setImage = UIImage(systemName: "heart", withConfiguration: imageConfig)
-        config.image = setImage
-        
-        button.configuration = config
-        
-        return button
     }()
     
     private let dateLabel: UILabel = {
@@ -146,8 +133,7 @@ final class DiaryViewController: BaseViewController {
         
         [musicImageView, 
          musicTitleLabel,
-         musicSingerLabel,
-         likeButton].forEach {
+         musicSingerLabel].forEach {
             musicView.addSubview($0)
         }
         
@@ -182,12 +168,6 @@ final class DiaryViewController: BaseViewController {
             $0.bottom.equalTo(musicSingerLabel.snp.top)
             $0.leading.equalTo(musicSingerLabel.snp.leading).offset(-3)
             $0.trailing.equalToSuperview().offset(-20)
-        }
-        
-        likeButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(musicImageView.snp.top)
-            $0.width.height.equalTo(25)
         }
         
         dateLabel.snp.makeConstraints {

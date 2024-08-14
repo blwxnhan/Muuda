@@ -32,11 +32,15 @@ extension MusicListCoordinator: MusicListViewControllerDelegate,
         navigationController.pushViewController(musicList, animated: true)
     }
     
-    func presentAddDiary(viewModel: DiaryViewModel) {
-        let addDiary = AddDiaryViewController(viewModel: viewModel)
+    func presentAddDiary(viewModel: DiaryViewModel, type: AddType) {
+        let addDiary = AddDiaryViewController(viewModel: viewModel, type: type)
         addDiary.delegate = self
         addDiary.modalPresentationStyle = UIModalPresentationStyle.automatic
         navigationController.present(addDiary, animated: true, completion: nil)
+    }
+    
+    func backToRoot() {
+        navigationController.popToRootViewController(animated: true)
     }
     
     func dismiss() {

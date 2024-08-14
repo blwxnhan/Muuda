@@ -10,7 +10,7 @@ import SnapKit
 import Moya
 
 protocol MusicListViewControllerDelegate: AnyObject {
-    func presentAddDiary(viewModel: DiaryViewModel)
+    func presentAddDiary(viewModel: DiaryViewModel, type: AddType)
 }
 
 final class MusicListViewController: BaseViewController {
@@ -156,6 +156,6 @@ final class MusicListViewController: BaseViewController {
 extension MusicListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let diary = viewModel.changeToDiary(indexPath.row)
-        delegate?.presentAddDiary(viewModel: diary)
+        delegate?.presentAddDiary(viewModel: diary, type: AddType.create)
     }
 }

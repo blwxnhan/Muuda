@@ -48,21 +48,7 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-    
-    private lazy var likeButton: UIButton = {
-        let button = UIButton()
         
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .black
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
-        let setImage = UIImage(systemName: "heart.fill", withConfiguration: imageConfig)
-        config.image = setImage
-        
-        button.configuration = config
-        
-        return button
-    }()
-    
     private let diaryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .natural
@@ -108,7 +94,6 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         [musicImageView,
         musicTitleLabel,
         musicSingerLabel,
-         likeButton,
         diaryLabel].forEach {
             contentView.addSubview($0)
         }
@@ -121,27 +106,21 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         musicTitleLabel.snp.makeConstraints {
             $0.top.equalTo(musicImageView.snp.bottom).offset(8)
             $0.leading.equalTo(musicImageView.snp.leading).offset(5)
-            $0.trailing.equalTo(likeButton.snp.leading).offset(-3)
+            $0.trailing.equalToSuperview().offset(-10)
             $0.height.equalTo(12)
         }
         
         musicSingerLabel.snp.makeConstraints {
             $0.top.equalTo(musicTitleLabel.snp.bottom).offset(3)
             $0.leading.equalTo(musicTitleLabel.snp.leading)
-            $0.trailing.equalTo(likeButton.snp.leading).offset(-3)
+            $0.trailing.equalTo(musicTitleLabel.snp.trailing)
             $0.height.equalTo(9)
-        }
-        
-        likeButton.snp.makeConstraints {
-            $0.trailing.equalTo(musicImageView.snp.trailing).offset(-5)
-            $0.top.equalTo(musicImageView.snp.bottom).offset(10)
-            $0.height.width.equalTo(13)
         }
         
         diaryLabel.snp.makeConstraints {
             $0.top.equalTo(musicSingerLabel.snp.bottom).offset(5)
             $0.bottom.equalToSuperview().offset(-15)
-            $0.trailing.equalTo(likeButton.snp.trailing).offset(-3)
+            $0.trailing.equalTo(musicTitleLabel.snp.trailing).offset(-3)
             $0.leading.equalTo(musicTitleLabel.snp.leading)
         }
     }

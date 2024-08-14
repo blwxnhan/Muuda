@@ -8,8 +8,14 @@
 import UIKit
 import SnapKit
 
+enum AddType {
+    case create
+    case update
+}
+
 protocol AddDiaryViewControllerDelegate: AnyObject {
     func dismiss()
+    func backToRoot()
 }
 
 final class AddDiaryViewController: BaseViewController {
@@ -19,6 +25,7 @@ final class AddDiaryViewController: BaseViewController {
     private var selectedColor: [Bool] = [false, false, false, false, false]
     
     private let viewModel: DiaryViewModel
+    private let addType: AddType
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -29,7 +36,8 @@ final class AddDiaryViewController: BaseViewController {
         setupButtons()
     }
     
-    init(viewModel: DiaryViewModel) {
+    init(viewModel: DiaryViewModel, type: AddType) {
+        self.addType = type
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         configureUI()
@@ -62,20 +70,6 @@ final class AddDiaryViewController: BaseViewController {
         label.font = .systemFont(ofSize: 17, weight: .light)
         
         return label
-    }()
-    
-    private lazy var likeButton: UIButton = {
-        let button = UIButton()
-        
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .black
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
-        let setImage = UIImage(systemName: "heart", withConfiguration: imageConfig)
-        config.image = setImage
-        
-        button.configuration = config
-        
-        return button
     }()
     
     private let seperatedLineView: UIView = {
@@ -131,6 +125,27 @@ final class AddDiaryViewController: BaseViewController {
         return datePicker
     }()
     
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        
+        var config = UIButton.Configuration.filled()
+        config.baseForegroundColor = .third
+        config.baseBackgroundColor = UIColor.init(hexCode: "DEB0B0")
+        
+        var titleAttr = AttributedString.init("삭제하기")
+        titleAttr.font = .systemFont(ofSize: 17, weight: .medium)
+        
+        config.attributedTitle = titleAttr
+        button.configuration = config
+        button.addAction(UIAction { [weak self] _ in
+            self?.clickDeleteButton()
+            self?.delegate?.dismiss()
+            self?.delegate?.backToRoot()
+        }, for: .touchUpInside)
+        
+        return button
+    }()
+    
     private let contentView = UIView()
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -181,13 +196,26 @@ final class AddDiaryViewController: BaseViewController {
     private func clickFinishedButton() {
         guard let imageName = viewModel.imageName else { return }
         
-        viewModel.handleButtonTapped(title: viewModel.title,
+        viewModel.handleFinishedButtonTapped(title: viewModel.title,
                                    imageName: imageName,
                                    singer: viewModel.singer,
                                    diary: diaryTextView.text,
                                    date: datePicker.date,
                                    color: selectedButtonToColorType(),
                                    isLike: true)
+    }
+    
+    private func clickDeleteButton() {
+        print("삭제됨")
+        guard let imageName = viewModel.imageName else { return }
+
+        viewModel.handleDeleteButtonTapped(title: viewModel.title,
+                                           imageName: imageName,
+                                           singer: viewModel.singer,
+                                           diary: diaryTextView.text,
+                                           date: datePicker.date,
+                                           color: selectedButtonToColorType(),
+                                           isLike: true)
     }
     
     private func configureUI() {
@@ -281,21 +309,33 @@ final class AddDiaryViewController: BaseViewController {
             colorStackView.addArrangedSubview($0)
         }
         
-        [diaryLabel,
-         diaryTextView,
-         colorLabel,
-         colorStackView,
-         dateLabel,
-         datePicker].forEach {
-            contentView.addSubview($0)
+        switch addType {
+        case .create:
+            [diaryLabel,
+             diaryTextView,
+             colorLabel,
+             colorStackView,
+             dateLabel,
+             datePicker].forEach {
+                contentView.addSubview($0)
+            }
+        case .update:
+            [diaryLabel,
+             diaryTextView,
+             colorLabel,
+             colorStackView,
+             dateLabel,
+             datePicker,
+            deleteButton].forEach {
+                contentView.addSubview($0)
+            }
         }
-        
+    
         scrollView.addSubview(contentView)
         
         [musicImageView,
          musicTitleLabel,
          musicSingerLabel,
-         likeButton,
          seperatedLineView,
          scrollView,
          finishedButton].forEach {
@@ -322,12 +362,6 @@ final class AddDiaryViewController: BaseViewController {
             $0.leading.equalTo(musicTitleLabel.snp.leading)
             $0.height.equalTo(25)
             $0.trailing.equalTo(musicTitleLabel.snp.trailing)
-        }
-        
-        likeButton.snp.makeConstraints {
-            $0.top.equalTo(musicImageView.snp.top).offset(1)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-25)
-            $0.height.width.equalTo(30)
         }
         
         seperatedLineView.snp.makeConstraints {
@@ -385,6 +419,16 @@ final class AddDiaryViewController: BaseViewController {
             $0.leading.equalTo(dateLabel.snp.leading).offset(-3)
             $0.trailing.equalTo(diaryTextView.snp.trailing)
             $0.height.equalTo(60)
+        }
+        
+        switch addType {
+        case .create: break
+        case .update:
+            deleteButton.snp.makeConstraints {
+                $0.top.equalTo(datePicker.snp.bottom).offset(10)
+                $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+                $0.height.equalTo(45)
+            }
         }
         
         finishedButton.snp.makeConstraints {
