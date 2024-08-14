@@ -25,6 +25,14 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        musicImageView.image = UIImage()
+        musicTitleLabel.text = ""
+        musicSingerLabel.text = ""
+    }
+    
     private var musicImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 10

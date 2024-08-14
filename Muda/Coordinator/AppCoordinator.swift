@@ -34,7 +34,7 @@ extension Coordinator {
 }
 
 
-final class AppCoordinator : Coordinator {
+final class AppCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinator: [Coordinator] = []
     

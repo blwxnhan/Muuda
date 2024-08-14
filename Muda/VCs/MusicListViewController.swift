@@ -27,8 +27,14 @@ final class MusicListViewController: BaseViewController {
         hideKeyboardWhenTappedAround()
         setupDataSource()
         
-        fetchMusicInfo(searchText: "new jeans")
         setupNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        searchBar.text = ""
+        fetchMusicInfo(searchText: "")
     }
     
     private var searchBar: UISearchBar = {

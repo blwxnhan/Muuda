@@ -170,6 +170,7 @@ final class AddDiaryViewController: BaseViewController {
         button.addAction(UIAction { [weak self] _ in
             self?.clickFinishedButton()
             self?.delegate?.dismiss()
+            self?.delegate?.backToRoot()
         }, for: .touchUpInside)
         
         return button

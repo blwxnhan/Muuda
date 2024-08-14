@@ -90,13 +90,19 @@ final class DiaryViewController: BaseViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .bold)
         label.numberOfLines = 0
-        label.setLineSpacing(lineSpacing: 15)
-        label.layer.borderWidth = 1
-        label.layer.cornerRadius = 10
-        label.layer.borderColor = UIColor.myGray.cgColor
-        label.sizeToFit()
+        label.setLineSpacing(lineSpacing: 20)
         
         return label
+    }()
+    
+    private let diaryLabelContainerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 10
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.myGray.cgColor
+        view.clipsToBounds = true
+        
+        return view
     }()
     
     private func configureUI() {
@@ -131,6 +137,8 @@ final class DiaryViewController: BaseViewController {
     override func setupLayouts() {
         super.setupLayouts()
         
+        diaryLabelContainerView.addSubview(diaryLabel)
+        
         [musicImageView, 
          musicTitleLabel,
          musicSingerLabel].forEach {
@@ -139,7 +147,7 @@ final class DiaryViewController: BaseViewController {
         
         [musicView,
          dateLabel,
-         diaryLabel].forEach {
+         diaryLabelContainerView].forEach {
             view.addSubview($0)
         }
     }
@@ -178,6 +186,11 @@ final class DiaryViewController: BaseViewController {
         }
         
         diaryLabel.snp.makeConstraints {
+            $0.leading.trailing.equalTo(diaryLabelContainerView).inset(10)
+            $0.top.equalTo(diaryLabelContainerView).inset(10)
+        }
+        
+        diaryLabelContainerView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
