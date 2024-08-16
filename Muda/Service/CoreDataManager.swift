@@ -25,7 +25,7 @@ final class CoreDataManager {
     
     // MARK: - core data에 데이터 저장 로직
     func saveData(with diaryData: DiaryModel) {
-        print("coredata 저장됨")
+
         let viewContext = self.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Diary", in: viewContext)
         
@@ -41,9 +41,13 @@ final class CoreDataManager {
         diary.setValue(diaryData.isLike, forKey: "isLike")
         
         do {
+            
             try viewContext.save()
+            
         } catch {
+            
             print(error)
+            
         }
     }
     
@@ -65,19 +69,25 @@ final class CoreDataManager {
                    let singer = $0.singer,
                    let diary = $0.diary,
                    let date = $0.date,
-                   let color = $0.color {
-                    diaryModels.append(DiaryModel(id: id,
-                                                  title: title,
-                                                  imageName: imageName,
-                                                  singer: singer,
-                                                  diary: diary,
-                                                  date: date,
-                                                  color: ColorsType.stringToType(color),
-                                                  isLike: $0.isLike))
+                   let color = $0.color 
+                {
+                    diaryModels.append(
+                        DiaryModel(
+                            id: id,
+                            title: title,
+                            imageName: imageName,
+                            singer: singer,
+                            diary: diary,
+                            date: date,
+                            color: ColorsType.stringToType(color),
+                            isLike: $0.isLike
+                        )
+                    )
                 }
             }
             
             return diaryModels
+            
         } catch {
             fatalError("\(error)")
         }
@@ -100,11 +110,13 @@ final class CoreDataManager {
             }
             
             try context.save()
+            
         } catch  {
             fatalError()
         }
     }
     
+    // MARK: - core data의 내용 삭제
     func deleteData(with diaryData: DiaryModel) {
         let context = self.persistentContainer.viewContext
         let request = Diary.fetchRequest()
@@ -119,6 +131,7 @@ final class CoreDataManager {
             }
                         
             try context.save()
+            
         } catch  {
             fatalError()
         }

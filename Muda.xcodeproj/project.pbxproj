@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		291ACCC32C6F1B98000EF81D /* ImageNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ACCC22C6F1B98000EF81D /* ImageNetwork.swift */; };
 		29257C5A2C59346000B2B0FB /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29257C592C59346000B2B0FB /* UILabel+.swift */; };
 		29257C5C2C593D5800B2B0FB /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29257C5B2C593D5800B2B0FB /* Date+.swift */; };
 		29401F842C5787D30018EF8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29401F832C5787D30018EF8F /* AppDelegate.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		291ACCC22C6F1B98000EF81D /* ImageNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNetwork.swift; sourceTree = "<group>"; };
 		29257C592C59346000B2B0FB /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		29257C5B2C593D5800B2B0FB /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		29401F802C5787D30018EF8F /* Muda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muda.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +206,7 @@
 				29401FBD2C579F070018EF8F /* APIService.swift */,
 				29401FC72C57A4F90018EF8F /* DiaryListManager.swift */,
 				29FD2D922C5A996300496160 /* CoreDataManager.swift */,
+				291ACCC22C6F1B98000EF81D /* ImageNetwork.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				29401FCE2C57B35C0018EF8F /* DiaryListViewModel.swift in Sources */,
 				29257C5A2C59346000B2B0FB /* UILabel+.swift in Sources */,
 				29401FAB2C579CCF0018EF8F /* MusicListCoordinator.swift in Sources */,
+				291ACCC32C6F1B98000EF81D /* ImageNetwork.swift in Sources */,
 				29401FDC2C5900540018EF8F /* MusicListViewModel.swift in Sources */,
 				29401FB72C579E6B0018EF8F /* UICollectionViewCell+.swift in Sources */,
 				29401FA32C579A2D0018EF8F /* TabBarCoordinator.swift in Sources */,

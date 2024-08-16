@@ -107,26 +107,11 @@ final class DiaryViewController: BaseViewController {
     
     private func configureUI() {
         musicView.backgroundColor = viewModel.color?.toUIColor()
-        requestImageURL(data: viewModel.imageName)
+        ImageNetwork.requestImageURL(data: viewModel.imageName, imageView: musicImageView)
         musicTitleLabel.text = viewModel.title
         musicSingerLabel.text = viewModel.singer
         dateLabel.text = viewModel.date?.basic
         diaryLabel.text = viewModel.diary
-    }
-    
-    private func requestImageURL(data: String?) {
-        guard let imageUrl = data else { return }
-        guard let url = URL(string: imageUrl) else { return }
-        
-        let backgroundQueue = DispatchQueue(label: "background_queue",qos: .background)
-        
-        backgroundQueue.async {
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            DispatchQueue.main.async {
-                self.musicImageView.image = UIImage(data: data)
-            }
-        }
     }
     
     private func setupNavigationBar() {
@@ -157,7 +142,7 @@ final class DiaryViewController: BaseViewController {
         
         musicView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(150)
         }
         
@@ -181,18 +166,18 @@ final class DiaryViewController: BaseViewController {
         dateLabel.snp.makeConstraints {
             $0.top.equalTo(musicView.snp.bottom).offset(15)
             $0.centerX.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.height.equalTo(25)
         }
         
         diaryLabel.snp.makeConstraints {
-            $0.leading.trailing.equalTo(diaryLabelContainerView).inset(10)
+            $0.horizontalEdges.equalTo(diaryLabelContainerView).inset(10)
             $0.top.equalTo(diaryLabelContainerView).inset(10)
         }
         
         diaryLabelContainerView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(15)
-            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
         }
     }

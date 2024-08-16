@@ -23,8 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let coordinator = AppCoordinator(navigationController: navigationController)
             coordinator.start()
 
-//            let coordinator = DiaryListCoordinator(navigationController: navigationController)
-//            coordinator.presentDiary()
             self.window?.makeKeyAndVisible()
         }
     }

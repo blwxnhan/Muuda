@@ -66,23 +66,9 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private func requestImageURL(data: String) {
-        guard let url = URL(string: data ) else { return }
-        
-        let backgroundQueue = DispatchQueue(label: "background_queue",qos: .background)
-        
-        backgroundQueue.async {
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            DispatchQueue.main.async {
-                self.musicImageView.image = UIImage(data: data)
-            }
-        }
-    }
-    
     private func configureUI() {
         guard let imageName = viewModel.imageName else { return }
-        requestImageURL(data: imageName)
+        ImageNetwork.requestImageURL(data: imageName, imageView: musicImageView)
         musicTitleLabel.text = viewModel.title
         musicSingerLabel.text = viewModel.singer
         diaryLabel.text = viewModel.diary
@@ -91,7 +77,12 @@ final class DiaryListCollectionViewCell: UICollectionViewCell {
     
     private func setStyles() {
         self.layer.shadowColor = UIColor.myGray.cgColor
-        self.layer.shadowPath = UIBezierPath(rect: CGRect(x: self.bounds.origin.x - 0.5, y: self.bounds.origin.y - 0.5, width: self.bounds.width + 0.5, height: self.bounds.height + 0.5)).cgPath
+        self.layer.shadowPath = UIBezierPath(rect: 
+                                                CGRect(
+                                                    x: self.bounds.origin.x - 0.5,
+                                                    y: self.bounds.origin.y - 0.5,
+                                                    width: self.bounds.width + 0.5,
+                                                    height: self.bounds.height + 0.5)).cgPath
         self.layer.shadowOpacity = 10
         self.layer.shadowRadius = 6
         self.contentView.layer.cornerRadius = 10

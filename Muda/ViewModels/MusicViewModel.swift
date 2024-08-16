@@ -14,6 +14,7 @@ final class MusicViewModel {
         self.musicData = musicData
     }
     
+    // MARK: - output
     var title: String {
         return musicData.title
     }

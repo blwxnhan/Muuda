@@ -7,18 +7,17 @@
 
 import Foundation
 
-class DiaryViewModel {
+final class DiaryViewModel {
     let dataManager: DiaryListType
     
     private var diaryData: DiaryModel?
-    private var index: Int?
     
-    init(dataManager: DiaryListType, with diary: DiaryModel? = nil, index: Int? = nil) {
+    init(dataManager: DiaryListType, with diary: DiaryModel? = nil) {
         self.dataManager = dataManager
         self.diaryData = diary
-        self.index = index
     }
     
+    // MARK: - output
     var title: String {
         guard let title = diaryData?.title else { return "" }
         return title
@@ -50,75 +49,127 @@ class DiaryViewModel {
         return diaryData?.isLike
     }
     
-    private func makeNewDiary(id: UUID,
-                      title: String,
-                      imageName: String,
-                      singer: String,
-                      diary: String,
-                      date: Date,
-                      color: ColorsType,
-                      isLike: Bool) {
-        let newDiary = DiaryModel(id: id,
-                                  title: title,
-                                  imageName: imageName,
-                                  singer: singer,
-                                  diary: diary,
-                                  date: date,
-                                  color: color,
-                                  isLike: isLike)
+    // MARK: - input
+    func handleFinishedButtonTapped(
+        title: String,
+        imageName: String,
+        singer: String,
+        diary: String,
+        date: Date,
+        color: ColorsType,
+        isLike: Bool
+    ) {
+        if self.diaryData?.date != nil {
+            updateDiary(
+                title: title,
+                imageName: imageName,
+                singer: singer,
+                diary: diary,
+                date: date,
+                color: color,
+                isLike: isLike
+            )
+        } else {
+            makeNewDiary(
+                id: UUID(),
+                title: title,
+                imageName: imageName,
+                singer: singer,
+                diary: diary,
+                date: date,
+                color: color,
+                isLike: isLike
+            )
+        }
+    }
+    
+    func handleDeleteButtonTapped(
+        title: String,
+        imageName: String,
+        singer: String,
+        diary: String,
+        date: Date,
+        color: ColorsType,
+        isLike: Bool
+    ) {
+        deleteDiary(
+            title: title,
+            imageName: imageName,
+            singer: singer,
+            diary: diary,
+            date: date,
+            color: color,
+            isLike: isLike
+        )
+    }
+
+    // MARK: - Logic
+    private func makeNewDiary(
+        id: UUID,
+        title: String,
+        imageName: String,
+        singer: String,
+        diary: String,
+        date: Date,
+        color: ColorsType,
+        isLike: Bool
+    ) {
+        let newDiary = DiaryModel(
+            id: id,
+            title: title,
+            imageName: imageName,
+            singer: singer,
+            diary: diary,
+            date: date,
+            color: color,
+            isLike: isLike
+        )
         
         self.dataManager.makeNewDiary(newDiary)
     }
     
-    private func updateDiary(title: String,
-                             imageName: String,
-                             singer: String,
-                             diary: String,
-                             date: Date,
-                             color: ColorsType,
-                             isLike: Bool) {
-        
+    private func updateDiary(
+         title: String,
+         imageName: String,
+         singer: String,
+         diary: String,
+         date: Date,
+         color: ColorsType,
+         isLike: Bool
+    ) {
         guard let diaryData = self.diaryData else { return }
-        let updateDiaryData = DiaryModel(exitingDiary: diaryData, diary: diary, date: date, color: color, isLike: isLike)
+        
+        let updateDiaryData = DiaryModel(
+            exitingDiary: diaryData,
+            diary: diary,
+            date: date,
+            color: color,
+            isLike: isLike
+        )
         
         self.dataManager.updateDiaryInfo(updateDiaryData)
-        print("수정성공")
     }
     
-    private func deleteDiary(title: String,
-                             imageName: String,
-                             singer: String,
-                             diary: String,
-                             date: Date,
-                             color: ColorsType,
-                             isLike: Bool) {
+    private func deleteDiary(
+         title: String,
+         imageName: String,
+         singer: String,
+         diary: String,
+         date: Date,
+         color: ColorsType,
+         isLike: Bool
+    ) {
+             
         guard let diaryData = self.diaryData else { return }
-        let deleteDiaryData = DiaryModel(exitingDiary: diaryData, diary: diary, date: date, color: color, isLike: isLike)
+        
+        let deleteDiaryData = DiaryModel(
+            exitingDiary: diaryData,
+            diary: diary,
+            date: date,
+            color: color,
+            isLike: isLike
+        )
         
         self.dataManager.deleteDiary(deleteDiaryData)
-    }
-    
-    func handleFinishedButtonTapped(title: String,
-                            imageName: String,
-                            singer: String,
-                            diary: String,
-                            date: Date,
-                            color: ColorsType,
-                            isLike: Bool) {
-        if self.diaryData?.date != nil {
-            updateDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
-        } else {
-            makeNewDiary(id: UUID(), title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
-        }
-    }
-    
-    func handleDeleteButtonTapped(title: String,
-                                  imageName: String,
-                                  singer: String,
-                                  diary: String,
-                                  date: Date,
-                                  color: ColorsType,
-                                  isLike: Bool) {
-        deleteDiary(title: title, imageName: imageName, singer: singer, diary: diary, date: date, color: color, isLike: isLike)
     }
 }

@@ -45,23 +45,9 @@ final class MusicListCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-        
-    private func requestImageURL(url: String) {
-        guard let url = URL(string: url) else { return }
-        
-        let backgroundQueue = DispatchQueue(label: "background_queue",qos: .background)
-        
-        backgroundQueue.async {
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            DispatchQueue.main.async {
-                self.musicImageView.image = UIImage(data: data)
-            }
-        }
-    }
      
     private func configureData() {
-        requestImageURL(url: viewModel.imageName)
+        ImageNetwork.requestImageURL(data: viewModel.imageName, imageView: musicImageView)
         musicTitleLabel.text = viewModel.title
         singerNameLabel.text = viewModel.singer
     }

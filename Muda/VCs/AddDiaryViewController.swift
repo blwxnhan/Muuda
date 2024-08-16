@@ -197,31 +197,35 @@ final class AddDiaryViewController: BaseViewController {
     private func clickFinishedButton() {
         guard let imageName = viewModel.imageName else { return }
         
-        viewModel.handleFinishedButtonTapped(title: viewModel.title,
-                                   imageName: imageName,
-                                   singer: viewModel.singer,
-                                   diary: diaryTextView.text,
-                                   date: datePicker.date,
-                                   color: selectedButtonToColorType(),
-                                   isLike: true)
+        viewModel.handleFinishedButtonTapped(
+            title: viewModel.title,
+            imageName: imageName,
+            singer: viewModel.singer,
+            diary: diaryTextView.text,
+            date: datePicker.date,
+            color: selectedButtonToColorType(),
+            isLike: true
+        )
     }
     
     private func clickDeleteButton() {
         print("삭제됨")
         guard let imageName = viewModel.imageName else { return }
 
-        viewModel.handleDeleteButtonTapped(title: viewModel.title,
-                                           imageName: imageName,
-                                           singer: viewModel.singer,
-                                           diary: diaryTextView.text,
-                                           date: datePicker.date,
-                                           color: selectedButtonToColorType(),
-                                           isLike: true)
+        viewModel.handleDeleteButtonTapped(
+            title: viewModel.title,
+            imageName: imageName,
+            singer: viewModel.singer,
+            diary: diaryTextView.text,
+            date: datePicker.date,
+            color: selectedButtonToColorType(),
+            isLike: true
+        )
     }
     
     private func configureUI() {
         guard let imageUrl = self.viewModel.imageName else { return }
-        requestImageURL(url: imageUrl)
+        ImageNetwork.requestImageURL(data: imageUrl, imageView: musicImageView)
         
         musicTitleLabel.text = viewModel.title
         musicSingerLabel.text = viewModel.singer
@@ -281,21 +285,6 @@ final class AddDiaryViewController: BaseViewController {
             selectedButton = fifthColorButton
         default:
             break
-        }
-    }
-
-    
-    private func requestImageURL(url: String) {
-        guard let url = URL(string: url) else { return }
-        
-        let backgroundQueue = DispatchQueue(label: "background_queue",qos: .background)
-        
-        backgroundQueue.async {
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            DispatchQueue.main.async {
-                self.musicImageView.image = UIImage(data: data)
-            }
         }
     }
     
