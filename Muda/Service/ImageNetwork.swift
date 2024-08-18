@@ -9,8 +9,8 @@ import UIKit
 
 final class ImageNetwork {
     static func requestImageURL(data: String?, imageView: UIImageView) {
-        guard let imageUrl = data else { return }
-        guard let url = URL(string: imageUrl) else { return }
+        guard let imageUrl = data,
+              let url = URL(string: imageUrl) else { return }
         
         let backgroundQueue = DispatchQueue(label: "background_queue",qos: .background)
         
