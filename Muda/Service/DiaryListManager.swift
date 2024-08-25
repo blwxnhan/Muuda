@@ -52,6 +52,7 @@ final class DiaryListManager: DiaryListType {
         CoreDataManager.shared.deleteData(with: diary)
     }
     
+    
     subscript(index: Int) -> DiaryModel {
         get {
             return diaryList[index]
