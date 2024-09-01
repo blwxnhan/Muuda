@@ -30,10 +30,10 @@ final class AddDiaryViewController: BaseViewController {
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         self.hideKeyboardWhenTappedAround()
         
-        setupButtons()
+        setupButtons()        
+        configureUI()
     }
     
     init(viewModel: DiaryViewModel, type: AddType) {
