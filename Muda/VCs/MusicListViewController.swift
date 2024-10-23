@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Moya
+import Combine
 
 protocol MusicListViewControllerDelegate: AnyObject {
     func presentAddDiary(viewModel: DiaryViewModel, type: AddType)
@@ -16,9 +17,12 @@ protocol MusicListViewControllerDelegate: AnyObject {
 final class MusicListViewController: BaseViewController {
     weak var delegate: MusicListViewControllerDelegate?
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, Music>!
+//    var dataSource: UICollectionViewDiffableDataSource<Section, Music>!
+//    var snapshot = NSDiffableDataSourceSnapshot<Section, Music>()
     
     private let viewModel = MusicListViewModel()
+    @Published var keyStroke: String = ""
+    var cancellables: Set<AnyCancellable> = []
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -26,7 +30,8 @@ final class MusicListViewController: BaseViewController {
         
         hideKeyboardWhenTappedAround()
         setupDataSource()
-        
+        searchBar.delegate = self
+
         setupNavigationBar()
     }
     
@@ -34,12 +39,11 @@ final class MusicListViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         searchBar.text = ""
-        fetchMusicInfo(searchText: "")
+        viewModel.fetchMusicList()
     }
     
     private var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.showsCancelButton = false
         searchBar.placeholder = "검색어를 입력해주세요"
         
         return searchBar
@@ -50,8 +54,7 @@ final class MusicListViewController: BaseViewController {
         button.setTitle("검색", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addAction(UIAction { [weak self] _ in
-            guard let text = self?.searchBar.text else { return }
-            self?.fetchMusicInfo(searchText: text)
+            self?.viewModel.fetchMusicList()
         }, for: .touchUpInside)
         
         return button
@@ -72,7 +75,15 @@ final class MusicListViewController: BaseViewController {
             cell.viewModel = musicVM
         }
         
-        self.dataSource = UICollectionViewDiffableDataSource<Section, Music>(collectionView: self.musicListCollectionView) {
+        $keyStroke
+             .receive(on: RunLoop.main)
+             .sink { keyword in
+                 print("setupDataSource:" , keyword)
+               self.viewModel.searchText = keyword
+             }
+             .store(in: &cancellables)
+                   
+        self.viewModel.dataSource = UICollectionViewDiffableDataSource<Section, Music>(collectionView: self.musicListCollectionView) {
             (collectionView, indexPath, music) -> UICollectionViewCell? in
             return self.musicListCollectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: music)
         }
@@ -107,20 +118,6 @@ final class MusicListViewController: BaseViewController {
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIImageView(image: UIImage(named: "headerLogo")))
-    }
-    
-    private func performQuery(data: [Music]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Music>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(data)
-        self.dataSource.apply(snapshot, animatingDifferences: true)
-    }
-    
-    private func fetchMusicInfo(searchText: String) {
-        viewModel.setSearchText(searchText)
-        viewModel.fetchMusicList {
-            self.performQuery(data: self.viewModel.musicList)
-        }
     }
     
     override func setupLayouts() {
@@ -163,5 +160,15 @@ extension MusicListViewController: UICollectionViewDelegateFlowLayout, UICollect
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let diary = viewModel.changeToDiary(indexPath.row)
         delegate?.presentAddDiary(viewModel: diary, type: AddType.create)
+    }
+}
+
+extension MusicListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        self.keyStroke = searchText
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.keyStroke = ""
     }
 }

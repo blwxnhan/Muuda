@@ -7,10 +7,25 @@
 
 import Foundation
 import Moya
+import Combine
+import UIKit
 
 final class MusicListViewModel {
+    var cancellables = Set<AnyCancellable>()
+    
+    var dataSource: UICollectionViewDiffableDataSource<Section, Music>!
+    var snapshot = NSDiffableDataSourceSnapshot<Section, Music>()
+    
     private var musicListData: [Music] = []
-    private var searchText: String?
+    @Published var searchText: String = ""
+    
+    init() {
+        $searchText.receive(on: RunLoop.main)
+        .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+        .sink { (_) in
+          self.fetchMusicList()
+        }.store(in: &cancellables)
+    }
     
     // MARK: - output
     var musicList: [Music] {
@@ -46,28 +61,29 @@ final class MusicListViewModel {
         return diaryViewModel
     }
     
-    /// Apple Music API로부터 데이터를 받아오는 메서드
-    func fetchMusicList(completion: @escaping (() -> Void)) {
-        guard let text = self.searchText else { return }
-        
-        let provider = MoyaProvider<APIService>()
-        
-        provider.request(.fetchMusic(term: text)) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case let .success(response):
-                    let result = try? response.map(MusicList.self)
-                    
-                    if let result = result {
-                        self.musicListData = result.results
-                        completion()
-                    }
-                    
-                case let .failure(error):
-                    print(error.localizedDescription)
+    func fetchMusicList() {
+        print("fetchMusicList", searchText)
+        APIService().fetchMusics(of: searchText)
+              .sink { completion in
+                switch completion {
+                case .finished:
+                  print("ViewModel searchMovies finished")
+                case .failure(let error):
+                  print("ViewModel searchMovies failure: \(error.localizedDescription)")
                 }
-            }
-        }
-    }
-    
+              } receiveValue: { musics in
+                        // api를 통해 값을 받으면 해당 데이터를 diffableDataSource에 넣는다.
+                self.snapshot.deleteAllItems()
+                self.snapshot.appendSections([.main])
+                
+                if musics.isEmpty {
+                            // 3.
+                  self.dataSource.apply(self.snapshot, animatingDifferences: true)
+                  return
+                }
+                self.snapshot.appendItems(musics)
+                self.dataSource.apply(self.snapshot, animatingDifferences: true)
+              }
+              .store(in: &cancellables)
+          }
 }
